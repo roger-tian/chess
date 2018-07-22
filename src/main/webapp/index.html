@@ -1,0 +1,47 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <title>象棋游戏</title>
+</head>
+<body style="background-color: #fff;">
+    <div class="container" id="app">
+        <div class="row text-center">
+            <h1>象棋游戏</h1>
+            <button id="chessReady" class="btn btn-default" @click="chessReady()">准备</button>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="form-group">
+                    <label>棋手颜色</label>
+                    <input type="text" id="chess_color" v-model="chess.color" />
+                </div>
+                <div class="form-group">
+                    <label>棋子坐标</label>
+                    <input type="text" class="form-control" id="pieceFrom" v-model="chess.from" />
+                    <input type="text" class="form-control" id="pieceTo" v-model="chess.to" />
+                    <button id="pieceMove" class="btn btn-default" @click="pieceMove()">走子</button>
+                    <button id="pieceEat" class="btn btn-default" @click="pieceEat()">吃子</button>
+                    <button id="pieceExchange" class="btn btn-default" @click="pieceExchange()">兑子</button>
+                    <button id="pieceFlip" class="btn btn-default" @click="pieceFlip()">翻开</button>
+                    <button id="chessLose" class="btn btn-default" @click="chessLose()">认输</button>
+                </div>
+                <div class="form-group">
+                    <label for="chess_log" class="sr-only"></label>
+                    <textarea class="form-control" rows="8" cols="" id="chess_log" v-model="chess.log"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/chess.js"></script>
+</body>
+<script>
+</script>
+</html>
