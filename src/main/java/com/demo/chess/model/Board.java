@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Board {
@@ -29,10 +30,18 @@ public class Board {
                     piece.setColor("black");
                 }
                 piece.setNegative(true);
-                logger.debug("piece: {}-{}-{}-{}", piece.getName(), piece.getValue(), piece.getColor(), index);
+                //logger.debug("piece: {}-{}-{}-{}", piece.getName(), piece.getValue(), piece.getColor(), index);
 
                 pieceList.add(piece);
             }
+        }
+
+        Collections.shuffle(pieceList);
+
+        for (int i=0; i<hori*vert; i++) {
+            Piece piece = pieceList.get(i);
+            logger.debug("pieceList, index: {}, value: {}, name: {}, color: {}, negative: {}",
+                    i, piece.getValue(), piece.getName(), piece.getColor(), piece.getNegative());
         }
     }
 

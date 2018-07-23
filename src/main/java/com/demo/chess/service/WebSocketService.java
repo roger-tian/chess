@@ -192,6 +192,7 @@ public class WebSocketService {
             }
         }
     }
+
     public static void sendOtherMessage(String message, Session session) {
         for (WebSocketService item: webSocketSet) {
             try {
