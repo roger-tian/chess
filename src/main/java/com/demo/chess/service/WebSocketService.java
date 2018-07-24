@@ -1,6 +1,7 @@
 package com.demo.chess.service;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.demo.chess.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +64,7 @@ public class WebSocketService {
                     msg = "ready@player2 is ready";
                     sendOtherMessage(msg, session);
                     board = new Board();
+
                     JSONArray pieceList = (JSONArray) JSONArray.toJSON(board.getPieceList());
                     logger.debug("jsonArray: {}", pieceList);
                     msg = "start@" + pieceList.toString();
