@@ -1,5 +1,6 @@
 package com.demo.chess.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.demo.chess.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class WebSocketService {
             return;
         }
 
-        String result;
+        ResultCode result;
         String msg;
         String[] posArray, pos;
         Position posFrom = new Position(), posTo = new Position();
@@ -62,8 +63,9 @@ public class WebSocketService {
                     msg = "ready@player2 is ready";
                     sendOtherMessage(msg, session);
                     board = new Board();
-                    logger.debug("board: {}", board.getPieceList().size());
-                    msg = "start@";
+                    JSONArray pieceList = (JSONArray) JSONArray.toJSON(board.getPieceList());
+                    logger.debug("jsonArray: {}", pieceList);
+                    msg = "start@" + pieceList.toString();
                     sendAllMessage(msg);
                 } else {    // chess already started
 
@@ -80,7 +82,7 @@ public class WebSocketService {
                 posTo.setY(Integer.parseInt(pos[1]));
 
                 result = Role.move(board, posFrom, posTo);
-                msg = "move@" + result;
+                msg = "move@" + result.toString();
                 sendSelfMessage(msg, session);
                 break;
             case "eat":
@@ -93,7 +95,7 @@ public class WebSocketService {
                 posTo.setY(Integer.parseInt(pos[1]));
 
                 result = Role.eat(board, posFrom, posTo);
-                msg = "move@" + result;
+                msg = "eat@" + result.toString();
                 sendSelfMessage(msg, session);
                 break;
             case "exchange":
@@ -106,7 +108,7 @@ public class WebSocketService {
                 posTo.setY(Integer.parseInt(pos[1]));
 
                 result = Role.exchange(board, posFrom, posTo);
-                msg = "move@" + result;
+                msg = "exchange@" + result.toString();
                 sendSelfMessage(msg, session);
                 break;
             case "flip":
@@ -137,6 +139,8 @@ public class WebSocketService {
                         msg = "color@" + pieceColor[0];
                         sendOtherMessage(msg, session);
                     }
+
+                    player2.setTurn(true);
                 } else if ((player2.getSession() == session) && (player2.getColor().length() == 0)) {
                     if (piece.getColor().equals(pieceColor[0])) {
                         player1.setColor(pieceColor[1]);
@@ -155,6 +159,8 @@ public class WebSocketService {
                         msg = "color@" + pieceColor[1];
                         sendSelfMessage(msg, session);
                     }
+
+                    player1.setTurn(true);
                 }
                 break;
             case "lose":
@@ -238,7 +244,6 @@ public class WebSocketService {
     private static CopyOnWriteArraySet<WebSocketService> webSocketSet = new CopyOnWriteArraySet<>();
     private Session session;
     private static Board board;
-//    private static Piece piece;
     private static Player player1 = new Player();
     private static Player player2 = new Player();
 

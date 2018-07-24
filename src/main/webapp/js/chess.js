@@ -7,6 +7,7 @@ if ('WebSocket' in window) {
 
 websocket.onerror = function () {
 };
+
 websocket.onopen = function () {
 };
 
